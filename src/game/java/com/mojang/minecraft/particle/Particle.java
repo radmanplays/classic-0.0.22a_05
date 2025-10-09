@@ -37,6 +37,7 @@ public class Particle extends Entity {
 		this.size = (float)(Math.random() * 0.5D + 0.5D);
 		this.lifetime = (int)(4.0D / (Math.random() * 0.9D + 0.1D));
 		this.age = 0;
+		this.makeStepSound = false;
 	}
 
 	public void tick() {

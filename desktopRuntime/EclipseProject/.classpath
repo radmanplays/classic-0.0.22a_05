@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="deps_fix/lwjgl-jemalloc.jar"/>
 	<classpathentry kind="lib" path="deps_fix/lwjgl-openal.jar"/>
 	<classpathentry kind="lib" path="deps_fix/lwjgl-opengles.jar"/>
+	<classpathentry kind="lib" path="deps_fix/codecwav-20101023.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -10,52 +10,54 @@ import com.mojang.minecraft.renderer.Tesselator;
 import java.util.Random;
 
 public class Tile {
+	protected static Random random = new Random();
 	public static final Tile[] tiles = new Tile[256];
 	public static final boolean[] shouldTick = new boolean[256];
 	private static int[] tickSpeed = new int[256];
-	public static final Tile rock;
-	public static final Tile grass;
-	public static final Tile dirt;
-	public static final Tile wood;
-	public static final Tile stoneBrick;
-	public static final Tile bush;
-	public static final Tile unbreakable;
-	public static final Tile water;
-	public static final Tile calmWater;
-	public static final Tile lava;
-	public static final Tile calmLava;
-	public static final Tile sand;
-	public static final Tile gravel;
-	public static final Tile oreGold;
-	public static final Tile oreIron;
-	public static final Tile oreCoal;
-	public static final Tile log;
-	public static final Tile leaf;
-	public static final Tile sponge;
-	public static final Tile glass;
-	public static final Tile clothRed;
-	public static final Tile clothOrange;
-	public static final Tile clothYellow;
-	public static final Tile clothChartreuse;
-	public static final Tile clothGreen;
-	public static final Tile clothSpringGreen;
-	public static final Tile clothCyan;
-	public static final Tile clothCapri;
-	public static final Tile clothUltramarine;
-	public static final Tile clothViolet;
-	public static final Tile clothPurple;
-	public static final Tile clothMagenta;
-	public static final Tile clothRose;
-	public static final Tile clothDarkGray;
-	public static final Tile clothGray;
-	public static final Tile clothWhite;
-	public static final Tile plantYellow;
-	public static final Tile plantRed;
-	public static final Tile mushroomBrown;
-	public static final Tile mushroomRed;
-	public static final Tile blockGold;
+	public static final Tile rock = (new Tile(1, 1)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile grass = (new GrassTile(2)).setSoundAndGravity(Tile.SoundType.grass, 0.9F, 1.0F);
+	public static final Tile dirt = (new DirtTile(3, 2)).setSoundAndGravity(Tile.SoundType.grass, 0.8F, 1.0F);
+	public static final Tile wood = (new Tile(4, 16)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile stoneBrick = (new Tile(5, 4)).setSoundAndGravity(Tile.SoundType.wood, 1.0F, 1.0F);
+	public static final Tile bush = (new Bush(6, 15)).setSoundAndGravity(Tile.SoundType.none, 0.7F, 1.0F);
+	public static final Tile unbreakable = (new Tile(7, 17)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile water = (new LiquidTile(8, Liquid.water)).setSoundAndGravity(Tile.SoundType.none, 1.0F, 1.0F);
+	public static final Tile calmWater = (new CalmLiquidTile(9, Liquid.water)).setSoundAndGravity(Tile.SoundType.none, 1.0F, 1.0F);
+	public static final Tile lava = (new LiquidTile(10, Liquid.lava)).setSoundAndGravity(Tile.SoundType.none, 1.0F, 1.0F);
+	public static final Tile calmLava = (new CalmLiquidTile(11, Liquid.lava)).setSoundAndGravity(Tile.SoundType.none, 1.0F, 1.0F);
+	public static final Tile sand = (new FallingTile(12, 18)).setSoundAndGravity(Tile.SoundType.gravel, 0.8F, 1.0F);
+	public static final Tile gravel = (new FallingTile(13, 19)).setSoundAndGravity(Tile.SoundType.gravel, 0.8F, 1.0F);
+	public static final Tile oreGold = (new Tile(14, 32)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile oreIron = (new Tile(15, 33)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile oreCoal = (new Tile(16, 34)).setSoundAndGravity(Tile.SoundType.stone, 1.0F, 1.0F);
+	public static final Tile log = (new LogTile(17)).setSoundAndGravity(Tile.SoundType.wood, 1.0F, 1.0F);
+	public static final Tile leaf = (new LeafTile(18, 22, true)).setSoundAndGravity(Tile.SoundType.grass, 1.0F, 0.4F);
+	public static final Tile sponge = (new SpongeTile(19)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 0.9F);
+	public static final Tile glass = (new GlassTile(20, 49, false)).setSoundAndGravity(Tile.SoundType.metal, 1.0F, 1.0F);
+	public static final Tile clothRed = (new Tile(21, 64)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothOrange = (new Tile(22, 65)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothYellow = (new Tile(23, 66)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothChartreuse = (new Tile(24, 67)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothGreen = (new Tile(25, 68)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothSpringGreen = (new Tile(26, 69)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothCyan = (new Tile(27, 70)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothCapri = (new Tile(28, 71)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothUltramarine = (new Tile(29, 72)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothViolet = (new Tile(30, 73)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothPurple = (new Tile(31, 74)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothMagenta = (new Tile(32, 75)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothRose = (new Tile(33, 76)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothDarkGray = (new Tile(34, 77)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothGray = (new Tile(35, 78)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile clothWhite = (new Tile(36, 79)).setSoundAndGravity(Tile.SoundType.cloth, 1.0F, 1.0F);
+	public static final Tile plantYellow = (new Bush(37, 13)).setSoundAndGravity(Tile.SoundType.none, 0.7F, 1.0F);
+	public static final Tile plantRed = (new Bush(38, 12)).setSoundAndGravity(Tile.SoundType.none, 0.7F, 1.0F);
+	public static final Tile mushroomBrown = (new Bush(39, 29)).setSoundAndGravity(Tile.SoundType.none, 0.7F, 1.0F);
+	public static final Tile mushroomRed = (new Bush(40, 28)).setSoundAndGravity(Tile.SoundType.none, 0.7F, 1.0F);
+	public static final Tile blockGold = (new Tile(41, 40)).setSoundAndGravity(Tile.SoundType.metal, 0.7F, 1.0F);
 	public int tex;
 	public final int id;
+	public Tile.SoundType soundType;
 	private float xx0;
 	private float yy0;
 	private float zz0;
@@ -65,10 +67,15 @@ public class Tile {
 	public float particleGravity;
 
 	protected Tile(int var1) {
-		new Random();
 		tiles[var1] = this;
 		this.id = var1;
 		this.setShape(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+	}
+
+	protected final Tile setSoundAndGravity(Tile.SoundType var1, float var2, float var3) {
+		this.particleGravity = var3;
+		this.soundType = var1;
+		return this;
 	}
 
 	protected final void setTicking(boolean var1) {
@@ -360,252 +367,52 @@ public class Tile {
 	public void onTileRemoved(Level var1, int var2, int var3, int var4) {
 	}
 
-	static {
-		Tile var10000 = new Tile(1, 1);
-		float var1 = 1.0F;
-		float var0 = 1.0F;
-		Tile var2 = var10000;
-		var2.particleGravity = var1;
-		rock = var2;
-		GrassTile var13 = new GrassTile(2);
-		var1 = 1.0F;
-		var0 = 0.9F;
-		GrassTile var3 = var13;
-		var3.particleGravity = var1;
-		grass = var3;
-		DirtTile var14 = new DirtTile(3, 2);
-		var1 = 1.0F;
-		var0 = 0.8F;
-		DirtTile var4 = var14;
-		var4.particleGravity = var1;
-		dirt = var4;
-		var10000 = new Tile(4, 16);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		wood = var2;
-		var10000 = new Tile(5, 4);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		stoneBrick = var2;
-		Bush var15 = new Bush(6, 15);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		Bush var5 = var15;
-		var5.particleGravity = var1;
-		bush = var5;
-		var10000 = new Tile(7, 17);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		unbreakable = var2;
-		LiquidTile var16 = new LiquidTile(8, Liquid.water);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		LiquidTile var6 = var16;
-		var6.particleGravity = var1;
-		water = var6;
-		CalmLiquidTile var17 = new CalmLiquidTile(9, Liquid.water);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		CalmLiquidTile var7 = var17;
-		var7.particleGravity = var1;
-		calmWater = var7;
-		var16 = new LiquidTile(10, Liquid.lava);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var6 = var16;
-		var6.particleGravity = var1;
-		lava = var6;
-		var17 = new CalmLiquidTile(11, Liquid.lava);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var7 = var17;
-		var7.particleGravity = var1;
-		calmLava = var7;
-		FallingTile var18 = new FallingTile(12, 18);
-		var1 = 1.0F;
-		var0 = 0.8F;
-		FallingTile var8 = var18;
-		var8.particleGravity = var1;
-		sand = var8;
-		var18 = new FallingTile(13, 19);
-		var1 = 1.0F;
-		var0 = 0.8F;
-		var8 = var18;
-		var8.particleGravity = var1;
-		gravel = var8;
-		var10000 = new Tile(14, 32);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		oreGold = var2;
-		var10000 = new Tile(15, 33);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		oreIron = var2;
-		var10000 = new Tile(16, 34);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		oreCoal = var2;
-		LogTile var19 = new LogTile(17);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		LogTile var9 = var19;
-		var9.particleGravity = var1;
-		log = var9;
-		LeafTile var20 = new LeafTile(18, 22, true);
-		var1 = 0.4F;
-		var0 = 1.0F;
-		LeafTile var10 = var20;
-		var10.particleGravity = var1;
-		leaf = var10;
-		SpongeTile var21 = new SpongeTile(19);
-		var1 = 0.9F;
-		var0 = 1.0F;
-		SpongeTile var11 = var21;
-		var11.particleGravity = var1;
-		sponge = var11;
-		GlassTile var22 = new GlassTile(20, 49, false);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		GlassTile var12 = var22;
-		var12.particleGravity = var1;
-		glass = var12;
-		var10000 = new Tile(21, 64);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothRed = var2;
-		var10000 = new Tile(22, 65);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothOrange = var2;
-		var10000 = new Tile(23, 66);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothYellow = var2;
-		var10000 = new Tile(24, 67);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothChartreuse = var2;
-		var10000 = new Tile(25, 68);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothGreen = var2;
-		var10000 = new Tile(26, 69);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothSpringGreen = var2;
-		var10000 = new Tile(27, 70);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothCyan = var2;
-		var10000 = new Tile(28, 71);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothCapri = var2;
-		var10000 = new Tile(29, 72);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothUltramarine = var2;
-		var10000 = new Tile(30, 73);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothViolet = var2;
-		var10000 = new Tile(31, 74);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothPurple = var2;
-		var10000 = new Tile(32, 75);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothMagenta = var2;
-		var10000 = new Tile(33, 76);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothRose = var2;
-		var10000 = new Tile(34, 77);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothDarkGray = var2;
-		var10000 = new Tile(35, 78);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothGray = var2;
-		var10000 = new Tile(36, 79);
-		var1 = 1.0F;
-		var0 = 1.0F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		clothWhite = var2;
-		var15 = new Bush(37, 13);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		var5 = var15;
-		var5.particleGravity = var1;
-		plantYellow = var5;
-		var15 = new Bush(38, 12);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		var5 = var15;
-		var5.particleGravity = var1;
-		plantRed = var5;
-		var15 = new Bush(39, 29);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		var5 = var15;
-		var5.particleGravity = var1;
-		mushroomBrown = var5;
-		var15 = new Bush(40, 28);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		var5 = var15;
-		var5.particleGravity = var1;
-		mushroomRed = var5;
-		var10000 = new Tile(41, 40);
-		var1 = 1.0F;
-		var0 = 0.7F;
-		var2 = var10000;
-		var2.particleGravity = var1;
-		blockGold = var2;
+	public static enum SoundType {
+		none("-", 0, 0.0F, 0.0F),
+		grass("grass", 4, 0.6F, 1.0F),
+		cloth("grass", 4, 0.7F, 1.2F),
+		gravel("gravel", 4, 1.0F, 1.0F),
+		stone("stone", 4, 1.0F, 1.0F),
+		metal("stone", 4, 1.0F, 2.0F),
+		wood("wood", 4, 1.0F, 1.0F);
+
+		public final String name;
+		private final float volume;
+		private final float pitch;
+		public int num;
+
+		private SoundType(String var3, int var2, float var4, float var5) {
+			this.num = var2;
+			this.name = var3;
+			this.volume = var4;
+			this.pitch = var5;
+		}
+
+		public final float getVolume() {
+			return this.volume / (Tile.random.nextFloat() * 0.4F + 1.0F) * 0.5F;
+		}
+
+		public final float getPitch() {
+			return this.pitch / (Tile.random.nextFloat() * 0.2F + 0.9F);
+		}
+		
+		public static SoundType getSoundType(String sound) {
+			switch (sound) {
+			case "step.grass":
+				return SoundType.grass;
+			case "step.cloth":
+				return SoundType.cloth;
+			case "step.gravel":
+				return SoundType.gravel;
+			case "step.stone":
+				return SoundType.stone;
+			case "step.metal":
+				return SoundType.metal;
+			case "step.wood":
+				return SoundType.wood;
+			default:
+				return SoundType.none;
+			}
+		}
 	}
 }

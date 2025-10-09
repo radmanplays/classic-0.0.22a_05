@@ -2,6 +2,7 @@ package com.mojang.minecraft.level;
 
 import com.mojang.minecraft.Entity;
 import com.mojang.minecraft.HitResult;
+import com.mojang.minecraft.Minecraft;
 import com.mojang.minecraft.character.Vec3;
 import com.mojang.minecraft.level.liquid.Liquid;
 import com.mojang.minecraft.level.tile.Tile;
@@ -36,6 +37,7 @@ public class Level implements Serializable {
 	private transient ArrayList tickList = new ArrayList();
 	public ArrayList entities = new ArrayList();
 	private boolean networkMode = false;
+	public transient Minecraft rendererContext;
 	int unprocessed = 0;
 	private int tickCount = 0;
 
@@ -665,121 +667,146 @@ public class Level implements Serializable {
 				int var6 = (int)Math.floor((double)var1.x);
 				int var7 = (int)Math.floor((double)var1.y);
 				int var8 = (int)Math.floor((double)var1.z);
+				int var9 = 20;
 
-				int var50 = 20;
-				
-				while(!Float.isNaN(var1.x) && !Float.isNaN(var1.y) && !Float.isNaN(var1.z)&& var50-- > 0) {
+				int var20;
+				byte var21;
+				do {
+					if(var9-- < 0) {
+						return null;
+					}
+
+					if(Float.isNaN(var1.x) || Float.isNaN(var1.y) || Float.isNaN(var1.z)) {
+						return null;
+					}
+
 					if(var6 == var3 && var7 == var4 && var8 == var5) {
 						return null;
 					}
 
-					float var9 = 999.0F;
 					float var10 = 999.0F;
 					float var11 = 999.0F;
+					float var12 = 999.0F;
 					if(var3 > var6) {
-						var9 = (float)var6 + 1.0F;
+						var10 = (float)var6 + 1.0F;
 					}
 
 					if(var3 < var6) {
-						var9 = (float)var6;
+						var10 = (float)var6;
 					}
 
 					if(var4 > var7) {
-						var10 = (float)var7 + 1.0F;
+						var11 = (float)var7 + 1.0F;
 					}
 
 					if(var4 < var7) {
-						var10 = (float)var7;
+						var11 = (float)var7;
 					}
 
 					if(var5 > var8) {
-						var11 = (float)var8 + 1.0F;
+						var12 = (float)var8 + 1.0F;
 					}
 
 					if(var5 < var8) {
-						var11 = (float)var8;
+						var12 = (float)var8;
 					}
 
-					float var12 = 999.0F;
 					float var13 = 999.0F;
 					float var14 = 999.0F;
-					float var15 = var2.x - var1.x;
-					float var16 = var2.y - var1.y;
-					float var17 = var2.z - var1.z;
-					if(var9 != 999.0F) {
-						var12 = (var9 - var1.x) / var15;
-					}
-
+					float var15 = 999.0F;
+					float var16 = var2.x - var1.x;
+					float var17 = var2.y - var1.y;
+					float var18 = var2.z - var1.z;
 					if(var10 != 999.0F) {
-						var13 = (var10 - var1.y) / var16;
+						var13 = (var10 - var1.x) / var16;
 					}
 
 					if(var11 != 999.0F) {
-						var14 = (var11 - var1.z) / var17;
+						var14 = (var11 - var1.y) / var17;
 					}
 
-					boolean var18 = false;
-					byte var20;
-					if(var12 < var13 && var12 < var14) {
+					if(var12 != 999.0F) {
+						var15 = (var12 - var1.z) / var18;
+					}
+
+					boolean var19 = false;
+					if(var13 < var14 && var13 < var15) {
 						if(var3 > var6) {
-							var20 = 4;
+							var21 = 4;
 						} else {
-							var20 = 5;
+							var21 = 5;
 						}
 
-						var1.x = var9;
-						var1.y += var16 * var12;
-						var1.z += var17 * var12;
-					} else if(var13 < var14) {
+						var1.x = var10;
+						var1.y += var17 * var13;
+						var1.z += var18 * var13;
+					} else if(var14 < var15) {
 						if(var4 > var7) {
-							var20 = 0;
+							var21 = 0;
 						} else {
-							var20 = 1;
+							var21 = 1;
 						}
 
-						var1.x += var15 * var13;
-						var1.y = var10;
-						var1.z += var17 * var13;
+						var1.x += var16 * var14;
+						var1.y = var11;
+						var1.z += var18 * var14;
 					} else {
 						if(var5 > var8) {
-							var20 = 2;
+							var21 = 2;
 						} else {
-							var20 = 3;
+							var21 = 3;
 						}
 
-						var1.x += var15 * var14;
-						var1.y += var16 * var14;
-						var1.z = var11;
+						var1.x += var16 * var15;
+						var1.y += var17 * var15;
+						var1.z = var12;
 					}
 
 					var6 = (int)Math.floor((double)var1.x);
-					if(var20 == 5) {
+					if(var21 == 5) {
 						--var6;
 					}
 
 					var7 = (int)Math.floor((double)var1.y);
-					if(var20 == 1) {
+					if(var21 == 1) {
 						--var7;
 					}
 
 					var8 = (int)Math.floor((double)var1.z);
-					if(var20 == 3) {
+					if(var21 == 3) {
 						--var8;
 					}
 
-					int var19 = this.getTile(var6, var7, var8);
-					if(var19 > 0 && Tile.tiles[var19].getLiquidType() == Liquid.none) {
-						return new HitResult(0, var6, var7, var8, var20);
-					}
-				}
+					var20 = this.getTile(var6, var7, var8);
+				} while(var20 <= 0 || Tile.tiles[var20].getLiquidType() != Liquid.none);
 
-				return null;
+				return new HitResult(0, var6, var7, var8, var21);
 			} else {
 				return null;
 			}
 		} else {
 			return null;
 		}
+	}
+
+	public void playSound(String var1, Entity var2, float var3, float var4) {
+		if(this.rendererContext != null) {
+			Minecraft var5 = this.rendererContext;
+			if(var5.soundManager != null) {
+				var5.soundManager.playSound(var1, var4, var3, var4);
+			}
+		}
+
+	}
+
+	public void playSound(String var1, float var2, float var3, float var4, float var5, float var6) {
+		if(this.rendererContext != null) {
+			Minecraft var7 = this.rendererContext;
+			if(var7.soundManager != null) {
+				var7.soundManager.playSound(var1, var2, var3, var4);
+			}
+		}
+
 	}
 	
 	public void writeTo(DataOutputStream out) throws IOException {

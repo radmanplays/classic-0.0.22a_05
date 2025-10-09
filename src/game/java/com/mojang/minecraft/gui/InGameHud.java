@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 public final class InGameHud {
@@ -28,7 +30,15 @@ public final class InGameHud {
 
 	public final void render() {
 		Font var1 = this.minecraft.font;
-		this.minecraft.initGui();
+	    if (!Display.isActive() || !Mouse.isMouseGrabbed() || !Mouse.isActuallyGrabbed()) {
+	        if (System.currentTimeMillis() - minecraft.prevFrameTime > 250L) {
+	            if (minecraft.screen == null) {
+	            	minecraft.pauseGame();
+	            }
+	        }
+	    }
+	    
+		this.minecraft.renderHelper.initGui();
 		Textures var2 = this.minecraft.textures;
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.minecraft.textures.getTextureId("/gui.png"));
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -64,7 +74,7 @@ public final class InGameHud {
 			}
 		}
 
-		var1.drawShadow("0.0.22a_5", 2, 2, 16777215);
+		var1.drawShadow("0.0.22a_05", 2, 2, 16777215);
 		var1.drawShadow(this.minecraft.fpsString, 2, 12, 16777215);
 		byte var17 = 10;
 		boolean var18 = false;
@@ -75,7 +85,7 @@ public final class InGameHud {
 
 		for(var7 = 0; var7 < this.messages.size() && var7 < var17; ++var7) {
 			if(((ChatLine)this.messages.get(var7)).counter < 200 || var18) {
-				var1.drawShadow(((ChatLine)this.messages.get(var7)).message, 2, this.scaledHeight - 8 - (var7 << 3) - 16, 16777215);
+				var1.drawShadow(((ChatLine)this.messages.get(var7)).message, 2, this.scaledHeight - 8 - var7 * 9 - 20, 16777215);
 			}
 		}
 
@@ -137,5 +147,14 @@ public final class InGameHud {
 		var6.vertexUV((float)(var0 + var4), (float)var1, -90.0F, (float)(var4 + 0) * var7, (float)var3 * var8);
 		var6.vertexUV((float)var0, (float)var1, -90.0F, 0.0F, (float)var3 * var8);
 		var6.end();
+	}
+
+	public final void addChatMessage(String var1) {
+		this.messages.add(0, new ChatLine(var1));
+
+		while(this.messages.size() > 50) {
+			this.messages.remove(this.messages.size() - 1);
+		}
+
 	}
 }

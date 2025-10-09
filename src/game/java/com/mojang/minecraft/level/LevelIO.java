@@ -1,6 +1,7 @@
 package com.mojang.minecraft.level;
 
 import com.mojang.minecraft.Minecraft;
+import com.mojang.minecraft.ProgressListener;
 
 import net.lax1dude.eaglercraft.internal.vfs2.VFile2;
 
@@ -20,19 +21,18 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 public final class LevelIO {
-	private Minecraft minecraft;
+	private ProgressListener progress;
 
-	public LevelIO(Minecraft var1) {
-		this.minecraft = var1;
+	public LevelIO(ProgressListener var1) {
+		this.progress = var1;
 	}
-
 	public final Level load(VFile2 var1) {
-		if(this.minecraft != null) {
-			this.minecraft.beginLevelLoading("Loading level");
+		if(this.progress != null) {
+			this.progress.beginLevelLoading("Loading level");
 		}
 
-		if(this.minecraft != null) {
-			this.minecraft.levelLoadUpdate("Reading..");
+		if(this.progress != null) {
+			this.progress.levelLoadUpdate("Reading..");
 		}
 
 		try {
@@ -77,12 +77,12 @@ public final class LevelIO {
 	}
 
 	public final Level loadLegacy(VFile2 var1) {
-		if(this.minecraft != null) {
-			this.minecraft.beginLevelLoading("Loading level");
+		if(this.progress != null) {
+			this.progress.beginLevelLoading("Loading level");
 		}
 
-		if(this.minecraft != null) {
-			this.minecraft.levelLoadUpdate("Reading..");
+		if(this.progress != null) {
+			this.progress.levelLoadUpdate("Reading..");
 		}
 
 		try {

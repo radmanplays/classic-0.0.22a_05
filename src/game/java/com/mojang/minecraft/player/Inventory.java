@@ -28,6 +28,24 @@ public final class Inventory {
 		return -1;
 	}
 
+	public final void scrollHotbar(int var1) {
+		if(var1 > 0) {
+			var1 = 1;
+		}
+
+		if(var1 < 0) {
+			var1 = -1;
+		}
+
+		for(this.selectedSlot -= var1; this.selectedSlot < 0; this.selectedSlot += this.slots.length) {
+		}
+
+		while(this.selectedSlot >= this.slots.length) {
+			this.selectedSlot -= this.slots.length;
+		}
+
+	}
+
 	public final void getSlotContainsTile(Tile var1) {
 		if(var1 != null) {
 			int var2 = this.getSlotContainsID(var1.id);

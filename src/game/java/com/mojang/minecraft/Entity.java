@@ -2,6 +2,7 @@ package com.mojang.minecraft;
 
 import com.mojang.minecraft.level.Level;
 import com.mojang.minecraft.level.liquid.Liquid;
+import com.mojang.minecraft.level.tile.Tile;
 import com.mojang.minecraft.net.PlayerMove;
 import com.mojang.minecraft.phys.AABB;
 import com.mojang.minecraft.renderer.Textures;
@@ -31,6 +32,8 @@ public class Entity implements Serializable {
 	public float heightOffset = 0.0F;
 	protected float bbWidth = 0.6F;
 	public float bbHeight = 1.8F;
+	private float walkDist = 0.0F;
+	public boolean makeStepSound = true;
 
 	public Entity(Level var1) {
 		this.level = var1;
@@ -137,46 +140,62 @@ public class Entity implements Serializable {
 	}
 
 	public void move(float var1, float var2, float var3) {
-		float var4 = var1;
-		float var5 = var2;
-		float var6 = var3;
-		ArrayList var7 = this.level.getCubes(this.bb.expand(var1, var2, var3));
+		float var4 = this.x;
+		float var5 = this.z;
+		float var6 = var1;
+		float var7 = var2;
+		float var8 = var3;
+		ArrayList var9 = this.level.getCubes(this.bb.expand(var1, var2, var3));
 
-		int var8;
-		for(var8 = 0; var8 < var7.size(); ++var8) {
-			var2 = ((AABB)var7.get(var8)).clipYCollide(this.bb, var2);
+		int var10;
+		for(var10 = 0; var10 < var9.size(); ++var10) {
+			var2 = ((AABB)var9.get(var10)).clipYCollide(this.bb, var2);
 		}
 
 		this.bb.move(0.0F, var2, 0.0F);
 
-		for(var8 = 0; var8 < var7.size(); ++var8) {
-			var1 = ((AABB)var7.get(var8)).clipXCollide(this.bb, var1);
+		for(var10 = 0; var10 < var9.size(); ++var10) {
+			var1 = ((AABB)var9.get(var10)).clipXCollide(this.bb, var1);
 		}
 
 		this.bb.move(var1, 0.0F, 0.0F);
 
-		for(var8 = 0; var8 < var7.size(); ++var8) {
-			var3 = ((AABB)var7.get(var8)).clipZCollide(this.bb, var3);
+		for(var10 = 0; var10 < var9.size(); ++var10) {
+			var3 = ((AABB)var9.get(var10)).clipZCollide(this.bb, var3);
 		}
 
 		this.bb.move(0.0F, 0.0F, var3);
-		this.horizontalCollision = var4 != var1 || var6 != var3;
-		this.onGround = var5 != var2 && var5 < 0.0F;
-		if(var4 != var1) {
+		this.horizontalCollision = var6 != var1 || var8 != var3;
+		this.onGround = var7 != var2 && var7 < 0.0F;
+		if(var6 != var1) {
 			this.xd = 0.0F;
 		}
 
-		if(var5 != var2) {
+		if(var7 != var2) {
 			this.yd = 0.0F;
 		}
 
-		if(var6 != var3) {
+		if(var8 != var3) {
 			this.zd = 0.0F;
 		}
 
 		this.x = (this.bb.x0 + this.bb.x1) / 2.0F;
 		this.y = this.bb.y0 + this.heightOffset;
 		this.z = (this.bb.z0 + this.bb.z1) / 2.0F;
+		float var13 = this.x - var4;
+		var1 = this.z - var5;
+		this.walkDist = (float)((double)this.walkDist + Math.sqrt((double)(var13 * var13 + var1 * var1)) * 0.6D);
+		if(this.makeStepSound) {
+			int var11 = this.level.getTile((int)this.x, (int)(this.y - 0.2F - this.heightOffset), (int)this.z);
+			if(this.walkDist > 1.0F && var11 > 0) {
+				Tile.SoundType var12 = Tile.tiles[var11].soundType;
+				if(var12 != Tile.SoundType.none) {
+					this.walkDist -= (float)((int)this.walkDist);
+					this.playSound("step." + var12.name, var12.getVolume() * (12.0F / 16.0F), var12.getPitch());
+				}
+			}
+		}
+
 	}
 
 	public boolean isInWater() {
@@ -225,6 +244,10 @@ public class Entity implements Serializable {
 		this.level = var1;
 	}
 
+	public void playSound(String var1, float var2, float var3) {
+		this.level.playSound(var1, this, var2, var3);
+	}
+
 	public void moveTo(float var1, float var2, float var3, float var4, float var5) {
 		this.xo = this.x = var1;
 		this.yo = this.y = var2;
@@ -232,5 +255,12 @@ public class Entity implements Serializable {
 		this.yRot = var4;
 		this.xRot = var5;
 		this.setPos(var1, var2, var3);
+	}
+
+	public float distanceTo(Entity var1) {
+		float var2 = this.x - var1.x;
+		float var3 = this.y - var1.y;
+		float var4 = this.z - var1.z;
+		return (float)Math.sqrt((double)(var2 * var2 + var3 * var3 + var4 * var4));
 	}
 }

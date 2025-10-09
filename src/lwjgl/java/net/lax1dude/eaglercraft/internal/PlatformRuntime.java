@@ -351,12 +351,16 @@ public class PlatformRuntime {
 			GLES30.glEnable(KHRDebug.GL_DEBUG_OUTPUT_SYNCHRONOUS_KHR);
 		}
 
+		logger.info("Initializing Audio...");
+		PlatformAudio.platformInitialize();
+
 		logger.info("Initializing Hooks...");
 		PlatformInput.initHooks(windowHandle);
 		PlatformApplication.initHooks(windowHandle);
 	}
 
 	public static void destroy() {
+		PlatformAudio.platformShutdown();
 		Filesystem.closeAllHandles();
 		GLES.destroy();
 		EGL.destroy();

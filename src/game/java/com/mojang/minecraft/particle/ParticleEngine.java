@@ -16,6 +16,17 @@ public final class ParticleEngine {
 		this.textures = var2;
 	}
 
+	public final void tick() {
+		for(int var1 = 0; var1 < this.particles.size(); ++var1) {
+			Particle var2 = (Particle)this.particles.get(var1);
+			var2.tick();
+			if(var2.removed) {
+				this.particles.remove(var1--);
+			}
+		}
+
+	}
+
 	public final void render(Player var1, float var2) {
 		if(this.particles.size() != 0) {
 			GL11.glEnable(GL11.GL_TEXTURE_2D);

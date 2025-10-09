@@ -50,7 +50,7 @@ public final class TextureLavaFX extends TextureFX {
 		this.red = var10;
 
 		for(var2 = 0; var2 < 256; ++var2) {
-			var3 = this.red[var2];
+			var3 = this.red[var2] * 2.0F;
 			if(var3 > 1.0F) {
 				var3 = 1.0F;
 			}
@@ -59,7 +59,7 @@ public final class TextureLavaFX extends TextureFX {
 				var3 = 0.0F;
 			}
 
-			var5 = (int)(var3 * 200.0F + 55.0F);
+			var5 = (int)(var3 * 100.0F + 155.0F);
 			var6 = (int)(var3 * var3 * 255.0F);
 			var7 = (int)(var3 * var3 * var3 * var3 * 128.0F);
 			this.imageData[var2 << 2] = (byte)var5;

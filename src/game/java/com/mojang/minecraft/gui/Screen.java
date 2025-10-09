@@ -129,6 +129,17 @@ public class Screen {
 		Font var5 = this.minecraft.font;
 		var5.drawShadow(var1, var2, var3, var4);
 	}
+	
+	public final void updateEvents() {
+		while(Mouse.next()) {
+			this.updateMouseEvents();
+		}
+
+		while(Keyboard.next()) {
+			this.updateKeyboardEvents();
+		}
+
+	}
 
 	public final void updateMouseEvents() {
 		if(Mouse.getEventButtonState()) {

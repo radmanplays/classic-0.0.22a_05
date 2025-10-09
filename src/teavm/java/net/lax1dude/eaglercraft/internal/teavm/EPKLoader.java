@@ -151,7 +151,8 @@ public class EPKLoader {
 					throw new IOException("File '" + name + "' is incomplete");
 				}
 				String s = path + name;
-				loadedFiles.put(path + name, load);
+				ResourceLoader.onResourceLoad(s);
+				loadedFiles.put(s, load);
 			}else {
 				IOUtils.skipFully(zis, len);
 			}

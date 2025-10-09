@@ -12,6 +12,7 @@ import net.lax1dude.eaglercraft.EagRuntime;
 import net.lax1dude.eaglercraft.EagUtils;
 import net.lax1dude.eaglercraft.socket.AddressResolver;
 import net.lax1dude.eaglercraft.socket.AddressResolver.ServerInfo;
+import net.peytonsound.ResourceLoader;
 
 /**
  * Copyright (c) 2022-2023 lax1dude. All Rights Reserved.
@@ -90,8 +91,24 @@ public class LWJGLEntryPoint {
 			}
 		}
 		
+		File[] f = new File("resources").listFiles();
+		
+		for(File f1 : f) {
+			loadResource(f1);
+		}
+		
 		(new Thread(minecraft)).run();
 
+	}
+	
+	private static void loadResource(File file) {
+		if(file.isDirectory()) {
+			for(File f : file.listFiles()) {
+				loadResource(f);
+			}
+		} else {
+			ResourceLoader.onResourceLoad(file.getPath().replace("\\", "/"));
+		}
 	}
 
 	private static void getPlatformOptionsFromArgs(String[] args) {
