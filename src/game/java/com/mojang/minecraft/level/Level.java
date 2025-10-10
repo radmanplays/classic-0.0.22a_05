@@ -793,7 +793,7 @@ public class Level implements Serializable {
 		if(this.rendererContext != null) {
 			Minecraft var5 = this.rendererContext;
 			if(var5.soundManager != null) {
-				var5.soundManager.playSound(var1, var4, var3, var4);
+				var5.soundManager.playSound(var1, var2.x, var2.y, var2.z);
 			}
 		}
 
