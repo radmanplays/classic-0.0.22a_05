@@ -15,6 +15,7 @@ import com.jcraft.jzlib.InflaterInputStream;
 import net.lax1dude.eaglercraft.internal.PlatformAssets;
 
 import net.lax1dude.eaglercraft.IOUtils;
+import net.peytonsound.ResourceLoader;
 
 /**
  * Copyright (c) 2022 lax1dude. All Rights Reserved.

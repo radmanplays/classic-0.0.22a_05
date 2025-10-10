@@ -28,6 +28,7 @@ import com.jcraft.jzlib.InflaterInputStream;
 import net.lax1dude.eaglercraft.internal.buffer.ByteBuffer;
 import net.lax1dude.eaglercraft.internal.buffer.EaglerBufferInputStream;
 import net.lax1dude.eaglercraft.IOUtils;
+import net.peytonsound.ResourceLoader;
 
 public class EPKLoader {
 
