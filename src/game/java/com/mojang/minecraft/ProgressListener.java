@@ -80,11 +80,6 @@ public final class ProgressListener {
 			this.minecraft.font.drawShadow(this.text, (var2 - this.minecraft.font.width(this.text)) / 2, var3 / 2 - 4 - 16, 16777215);
 			this.minecraft.font.drawShadow(this.title, (var2 - this.minecraft.font.width(this.title)) / 2, var3 / 2 - 4 + 8, 16777215);
 			Display.update();
-
-			try {
-				Thread.yield();
-			} catch (Exception var7) {
-			}
 		}
 	}
 }
