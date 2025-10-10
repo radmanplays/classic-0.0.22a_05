@@ -599,7 +599,10 @@ public final class Minecraft implements Runnable {
 							this.connectionManager.sendBlockChange(var1, var2, var3, this.editMode, this.player.inventory.getSelected());
 						}
 
-						var4.destroy(this.level, var1, var2, var3, this.particleEngine);
+						if(var4.soundType != Tile.SoundType.none) {
+							this.level.playSound("step." + var4.soundType.name, (float)var1, (float)var2, (float)var3, (var4.soundType.getVolume() + 1.0F) / 2.0F, var4.soundType.getPitch() * 0.8F);
+							var4.destroy(this.level, var1, var2, var3, this.particleEngine);
+						}
 					}
 
 					return;

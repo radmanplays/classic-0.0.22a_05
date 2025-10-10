@@ -106,7 +106,6 @@ public final class SoundManager {
 				if (EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
 					trk = PlatformAudio.loadAudioDataNew(sound, true, browserResourceLoader);
 				} else {
-					System.out.println("playing " + sound.toString());
 					trk = PlatformAudio.loadAudioData(sound, true);
 				}
 	
@@ -118,7 +117,6 @@ public final class SoundManager {
 			if (trk != null) {
 				PlatformAudio.beginPlayback(trk, x, y, z, type.getVolume(), type.getPitch(), false);
 			}
-			System.out.println("playing " + sound.toString());
 		}
 	}
 
