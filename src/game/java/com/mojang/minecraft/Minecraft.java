@@ -49,6 +49,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 import java.util.zip.GZIPOutputStream;
+import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -401,7 +402,7 @@ public final class Minecraft implements Runnable {
 								}
 
 								var62 = var44.minecraft.levelRenderer;
-								List<Chunk> var73 = ArrayList<>(var62.dirtyChunks);
+								List<Chunk> var73 = new ArrayList<>(var62.dirtyChunks);
 								var73.sort(new DirtyChunkSorter(var74));
 								var73.addAll(var62.dirtyChunks);
 								var63 = 4;
