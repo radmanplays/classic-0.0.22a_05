@@ -30,7 +30,6 @@ public final class SoundManager {
 	
 	private IAudioHandle musicHandle;
 	public boolean enabled = true;
-
 	public boolean playMusic() {
 		if(enabled) {
 			String music = SoundPool.getRandomMusic();
@@ -45,19 +44,19 @@ public final class SoundManager {
 					this.music.put(music, trk);
 				}
 			}
-	
+
 			if (trk != null) {
-				musicHandle = PlatformAudio.beginPlaybackStatic(trk, 1.0f, 1.0f, false);
+				// Reduce music volume to 0.3f to allow sound effects to be heard
+				musicHandle = PlatformAudio.beginPlaybackStatic(trk, 0.3f, 1.0f, false);
 				return true;
 			}
-	
+
 			return false;
 		} else {
 			return false;
 		}
 	}
-	
-	// Only plays sounds created by entities other than the player (I think)
+
 	public void playSound(String var1, Entity var2) {
 		if(enabled) {
 			SoundType type = SoundType.getSoundType(var1);
@@ -70,19 +69,19 @@ public final class SoundManager {
 				return;
 			}
 			IAudioResource trk = sounds.get(sound);
-	
+
 			if (trk == null) {
 				if (EagRuntime.getPlatformType() != EnumPlatformType.DESKTOP) {
 					trk = PlatformAudio.loadAudioDataNew(sound, true, browserResourceLoader);
 				} else {
 					trk = PlatformAudio.loadAudioData(sound, true);
 				}
-	
+
 				if (trk != null) {
 					this.sounds.put(sound, trk);
 				}
 			}
-	
+
 			if (trk != null) {
 				PlatformAudio.beginPlayback(trk, var2.x, var2.y, var2.z, type.getVolume(), type.getPitch(), false);
 			}
