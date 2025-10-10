@@ -410,6 +410,8 @@ public class PlatformRuntime {
 
 		PlatformInput.pressAnyKeyScreen();
 
+		PlatformAudio.initialize();
+
 		if(finalLoadScreen != null) {
 			EarlyLoadScreen.paintFinal(PlatformOpenGL.checkVAOCapable(), false);
 		}else {

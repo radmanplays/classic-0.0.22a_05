@@ -472,6 +472,7 @@ public class PlatformInput {
 		win.getDocument().addEventListener("visibilitychange", visibilitychange = new EventListener<Event>() {
 			@Override
 			public void handleEvent(Event evt) {
+				PlatformAudio.handleVisibilityChange();
 			}
 		});
 

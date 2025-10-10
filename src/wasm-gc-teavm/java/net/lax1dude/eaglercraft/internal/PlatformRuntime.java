@@ -115,6 +115,8 @@ public class PlatformRuntime {
 		VFile2.setPrimaryFilesystem(resourcePackFilesystem);
 
 		logger.info("Initializing sound engine...");
+
+		PlatformAudio.initialize();
 	}
 
 	@Import(module = "platformRuntime", name = "getRootElement")
