@@ -47,7 +47,7 @@ import net.lax1dude.eaglercraft.internal.buffer.WASMGCDirectArrayCopy;
 import net.lax1dude.eaglercraft.internal.wasm_gc_teavm.BetterJSStringConverter;
 import net.lax1dude.eaglercraft.internal.wasm_gc_teavm.JOrbisAudioBufferDecoder;
 import net.lax1dude.eaglercraft.internal.wasm_gc_teavm.WASMGCClientConfigAdapter;
-import net.minecraft.src.MathHelper;
+import com.mojang.util.MathHelper;
 import net.lax1dude.eaglercraft.EagRuntime;
 
 public class PlatformAudio {

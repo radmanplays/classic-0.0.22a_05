@@ -50,7 +50,7 @@ import net.lax1dude.eaglercraft.internal.teavm.JOrbisAudioBufferDecoder;
 import net.lax1dude.eaglercraft.internal.teavm.TeaVMBlobURLManager;
 import net.lax1dude.eaglercraft.internal.teavm.TeaVMClientConfigAdapter;
 import net.lax1dude.eaglercraft.internal.teavm.TeaVMUtils;
-import net.minecraft.src.MathHelper;
+import com.mojang.util.MathHelper;
 
 public class PlatformAudio {
 
