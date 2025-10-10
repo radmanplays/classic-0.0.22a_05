@@ -485,6 +485,21 @@ public final class Minecraft implements Runnable {
 
 								var44.minecraft.hud.render();
 							} else {
+								if (Display.wasResized()) {
+									if(Display.getHeight() != 0) {
+										this.width = Display.getWidth();
+										this.height = Display.getHeight();
+										if(this.hud !=null) {
+											this.hud = new InGameHud(this, this.width, this.height);
+										}
+										
+										if(this.screen != null) {
+											Screen sc = this.screen;
+											this.setScreen((Screen)null);
+											this.setScreen(sc);
+										}
+									}
+								}
 								GL11.glViewport(0, 0, var44.minecraft.width, var44.minecraft.height);
 								GL11.glClearColor(0.0F, 0.0F, 0.0F, 0.0F);
 								GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT | GL11.GL_COLOR_BUFFER_BIT);
