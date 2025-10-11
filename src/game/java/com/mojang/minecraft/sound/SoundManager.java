@@ -46,8 +46,7 @@ public final class SoundManager {
 			}
 
 			if (trk != null) {
-				// Reduce music volume to 0.3f to allow sound effects to be heard
-				musicHandle = PlatformAudio.beginPlaybackStatic(trk, 0.3f, 1.0f, false);
+				musicHandle = PlatformAudio.beginPlaybackStatic(trk, 1.0f, 1.0f, false);
 				return true;
 			}
 

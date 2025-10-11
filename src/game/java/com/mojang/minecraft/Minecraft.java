@@ -134,6 +134,7 @@ public final class Minecraft implements Runnable {
 				int var2 = this.width * 240 / this.height;
 				int var3 = this.height * 240 / this.height;
 				var1.init(this, var2, var3);
+				this.hideGui = false;
 			} else {
 				this.grabMouse();
 			}
@@ -866,7 +867,7 @@ public final class Minecraft implements Runnable {
 															var48 = ((Byte)var23[0]).byteValue();
 															var35 = (String)var23[1];
 															var5 = var48;
-															if(var5 < 0) {
+															if(var5 < 0 && var35 != "") {
 																var26.minecraft.hud.addChatMessage("&e" + var35);
 															} else {
 																var26.players.get(Byte.valueOf(var5));
