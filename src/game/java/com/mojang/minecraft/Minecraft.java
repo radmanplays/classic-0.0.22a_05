@@ -475,7 +475,7 @@ public final class Minecraft implements Runnable {
 
 								GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 								var44.setupFog();
-								var6.renderSurroundingGround();
+//								var6.renderSurroundingGround();
 								GL11.glEnable(GL11.GL_BLEND);
 //								GL11.glColorMask(false, false, false, false);
 								var46 = var6.render(var16, 1);
