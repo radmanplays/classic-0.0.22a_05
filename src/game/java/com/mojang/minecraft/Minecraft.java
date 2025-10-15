@@ -867,7 +867,7 @@ public final class Minecraft implements Runnable {
 															var48 = ((Byte)var23[0]).byteValue();
 															var35 = (String)var23[1];
 															var5 = var48;
-															if(var5 < 0 && var35 != "") {
+															if(var5 < 0 && var35 != null && !var35.isEmpty()) {
 																var26.minecraft.hud.addChatMessage("&e" + var35);
 															} else {
 																var26.players.get(Byte.valueOf(var5));
